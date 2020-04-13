@@ -1,4 +1,4 @@
-import { ADD_TODO, FETCH_TODOS_REQUEST, FETCH_TODOS_SUCCESS, FETCH_TODOS_FAILURE } from '../types/todoTypes';
+import { ADD_TODO, FETCH_TODOS_REQUEST, FETCH_TODOS_SUCCESS, FETCH_TODOS_FAILURE, DELETE_TODO, EDIT_TODO } from '../types/todoTypes';
 
 const initialState = {
     loading: false,
@@ -7,6 +7,8 @@ const initialState = {
 }
 
 const todoReducer = (state = initialState, action) => {
+    console.log('action', action);
+
     switch (action.type) {
         case FETCH_TODOS_REQUEST:
             return {
@@ -26,7 +28,24 @@ const todoReducer = (state = initialState, action) => {
                 error: action.payload
             }
         case ADD_TODO:
-            return state.todos.concat([action.data]);
+            return {
+                loading: false,
+                todos: state.todos.concat([action.payload]),
+                error: ''
+            }
+        case DELETE_TODO:
+            return {
+                loading: false,
+                todos: state.todos.filter(todo => todo.id !== action.payload),
+                error: ''
+            }
+        case EDIT_TODO:
+
+            return {
+                loading: false,
+                todos: state.todos.map(todo => todo.id === action.payload.id ? action.payload : todo),
+                error: ''
+            }
         default:
             return state;
     }

@@ -2,6 +2,7 @@ import React from 'react';
 import { useEffect } from "react";
 import { connect } from "react-redux";
 import { fetchTodos } from "../actions/todoActions";
+import TodoContainer from './TodoContainer';
 
 function TodosContainer({ todoData, fetchTodos }) {
     useEffect(() => {
@@ -12,14 +13,13 @@ function TodosContainer({ todoData, fetchTodos }) {
     ) : todoData.error ? (
         <h2>{todoData.error}</h2>
     ) : (
-                <div>
-                    <h2>Todo List</h2>
-                    <div>
-                        <ul>
+                <div className="container">
+                    <div className="main">
+                        <ul className="list-group">
                             {todoData &&
                                 todoData.todos &&
                                 todoData.todos.map(
-                                    (todo, index) => <li key={index}>{todo.title}</li>)
+                                    (todo, index) => <TodoContainer key={index} todo={todo} />)
                             }
                         </ul>
                     </div>
