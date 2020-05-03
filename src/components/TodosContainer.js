@@ -1,8 +1,8 @@
 import React from 'react';
 import { useEffect } from "react";
 import { connect } from "react-redux";
-import { fetchTodos } from "../actions/todoActions";
 import TodoContainer from './TodoContainer';
+import { FETCH_TODOS } from '../types/todoTypes';
 
 function TodosContainer({ todoData, fetchTodos }) {
     useEffect(() => {
@@ -35,7 +35,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchTodos: () => dispatch(fetchTodos())
+        fetchTodos: () => dispatch({ type: FETCH_TODOS })
     }
 }
 

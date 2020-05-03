@@ -7,7 +7,6 @@ const initialState = {
 }
 
 const todoReducer = (state = initialState, action) => {
-    console.log('action', action);
 
     switch (action.type) {
         case FETCH_TODOS_REQUEST:
@@ -40,7 +39,6 @@ const todoReducer = (state = initialState, action) => {
                 error: ''
             }
         case EDIT_TODO:
-
             return {
                 loading: false,
                 todos: state.todos.map(todo => todo.id === action.payload.id ? action.payload : todo),

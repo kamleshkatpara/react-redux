@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { DeleteTodo, EditTodo } from '../actions/todoActions';
+import { REMOVE_TODO, UPDATE_TODO } from '../types/todoTypes';
 
 const TodoContainer = ({ todo }) => {
 
@@ -19,7 +19,7 @@ const TodoContainer = ({ todo }) => {
             alert('Please enter title');
             return;
         }
-        dispatch(EditTodo(id, title))
+        dispatch({ type: UPDATE_TODO, payload: { id, title } });
         setEdit(false);
     }
 
@@ -58,7 +58,7 @@ const TodoContainer = ({ todo }) => {
                     </div>
 
                     <div className="col">
-                        <i onClick={() => { if (window.confirm('Delete the Todo ?')) { dispatch(DeleteTodo((todo.id))) }; }} className="mt-3 fa fa-trash" aria-hidden="true"></i>
+                        <i onClick={() => { if (window.confirm('Delete the Todo ?')) { dispatch({ type: REMOVE_TODO, payload: todo.id }) }; }} className="mt-3 fa fa-trash" aria-hidden="true"></i>
                     </div>
 
                 </div>
