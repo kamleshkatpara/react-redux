@@ -1,19 +1,23 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
 
 import monitorReducersEnhancer from './enhancers/monitorReducer'
-// import loggerMiddleware from './middleware/logger'
-import { createLogger } from 'redux-logger'
 
 import rootReducer from './reducers'
 
-const logger = createLogger({
-    // ...options
-});
+import createSagaMiddleware from 'redux-saga'
+
+import rootSaga from './sagas';
+
+import { createLogger } from 'redux-logger'
+
+const logger = createLogger({});
+
+const sagaMiddleware = createSagaMiddleware()
 
 export default function configureAppStore(preloadedState) {
     const store = configureStore({
         reducer: rootReducer,
-        middleware: [logger, ...getDefaultMiddleware()],
+        middleware: [logger, ...getDefaultMiddleware(), sagaMiddleware],
         preloadedState,
         enhancers: [monitorReducersEnhancer]
     })
@@ -22,5 +26,6 @@ export default function configureAppStore(preloadedState) {
         module.hot.accept('./reducers', () => store.replaceReducer(rootReducer))
     }
 
+    sagaMiddleware.run(rootSaga);
     return store
 }
